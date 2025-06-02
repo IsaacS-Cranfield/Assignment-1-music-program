@@ -32,6 +32,11 @@ def main_menu_guest():
     print("      Welcome to My Music Manager      ")
     print("=" * 40)
 
+    time.sleep(1)
+    print("1. User Login")
+    print("2. Create User Account")
+    print("3. Exit")
+
 # User account creation.
 #def create_account():
 
