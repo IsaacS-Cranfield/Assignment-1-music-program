@@ -25,18 +25,18 @@ username = {
 }
 '''
 
-# Main menu
-def main_menu():
+# Main menu guest (not logged in)
+def main_menu_guest():
     time.sleep(0.5)
     print("=" * 40)
     print("      Welcome to My Music Manager      ")
     print("=" * 40)
 
 # User account creation.
-def create_account():
+#def create_account():
 
 
-
+'''
 # Function to print the playlist to the user.
 def print_playlist(playlist):
     time.sleep(0.5)
@@ -62,5 +62,6 @@ def remove_song(playlist):
     time.sleep(0.5)
     title = input("Enter the title of the song to remove: ").strip().lower()
     playlist = [song for song in playlist if song[0] != title]
+'''
 
-main_menu()  
+main_menu_guest()  
