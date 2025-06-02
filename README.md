@@ -1,1 +1,1 @@
-"# Assignment-1-music-program" 
+This is my music program for Assignment 1 in the DMP unit
