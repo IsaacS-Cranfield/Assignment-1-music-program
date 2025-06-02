@@ -4,6 +4,39 @@ import time
 # Create necessary files
 open("users.json", "a").close()
 
+''' Basic user structure:
+username = {
+    "email": "",
+    "password": "",
+    "playlists": [
+        {
+            "name": "",
+            "songs": [
+                ("title", "artist", "0:00"),
+            ]
+        },
+        {
+            "name": "",
+            "songs": [
+                ("title", "artist", "0:00")
+            ]
+        }
+    ]
+}
+'''
+
+# Main menu
+def main_menu():
+    time.sleep(0.5)
+    print("=" * 40)
+    print("      Welcome to My Music Manager      ")
+    print("=" * 40)
+
+# User account creation.
+def create_account():
+
+
+
 # Function to print the playlist to the user.
 def print_playlist(playlist):
     time.sleep(0.5)
@@ -30,4 +63,4 @@ def remove_song(playlist):
     title = input("Enter the title of the song to remove: ").strip().lower()
     playlist = [song for song in playlist if song[0] != title]
 
-      
+main_menu()  
