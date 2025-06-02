@@ -1,7 +1,8 @@
 # Music app making use of lists and tuples
 import time
 
-
+# Create necessary files
+open("users.json", "a").close()
 
 # Function to print the playlist to the user.
 def print_playlist(playlist):
