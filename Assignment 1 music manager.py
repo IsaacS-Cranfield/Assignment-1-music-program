@@ -44,6 +44,13 @@ def spinner(seconds=2, text="Loading"): # just like the delay function, will def
         time.sleep(0.1)
         idx += 1
     print(f"\r{text}... Done!     ")
+
+def typewriter(text, delay_time=0.05):
+    # Function to simulate typewriter effect for given text
+    for char in text:
+        print(char, end='')
+        time.sleep(delay_time)  # Delay between each character
+    print()  # New line after the text
    
 # password hashing function 
 def hash_password(password):
@@ -54,18 +61,20 @@ def hash_password(password):
 def main_menu_guest():
     while True:
         # Title
-        time.sleep(0.5)
-        print("\n")
+        delay()
+        print("\n" + "=" * 40)
+        print("      Welcome to the Music Manager      ")
         print("=" * 40)
-        print("      Welcome to My Music Manager      ")
-        print("=" * 40)
-
+        delay()
         # Options
-        time.sleep(1)
-        print("1. User Login")
-        print("2. Create User Account")
-        print("3. Exit")
-
+        delay(1)
+        typewriter("1. User Login", 0.03)
+        delay(0.2)
+        typewriter("2. Create User Account", 0.02)
+        delay(0.2)
+        typewriter("3. Exit", 0.05)
+        delay(0.5)
+        
         choice = input("Enter an option (1-3): ").strip()
         delay()
         match choice:
@@ -83,8 +92,48 @@ def main_menu_guest():
             case _:
                 print("Invalid option. Please try again.")
     
+def main_menu_user(username):
+    while True:
+        # Title
+        delay()
+        print("\n" + "=" * 40)
+        print(f"      Welcome {username} to the Music Manager      ")
+        print(f"{"" * 20}(Logged in as {username}){"" * 20}")
+        delay()
+        # Options
+        delay(1)
+        typewriter("1. View My Playlists", 0.03)
+        delay(0.2)
+        typewriter("2. Create Playlist", 0.02)
+        delay(0.2)
+        typewriter("3. Logout1", 0.05)
+        delay(0.5)
 
-    
+        choice = input("Enter an option (1-3): ").strip()
+        delay()
+        match choice:
+            case "1":
+                # Placeholder for viewing playlists
+                print("Viewing playlists is not implemented yet.")
+                delay(1)
+            case "2":
+                # Placeholder for creating a new playlist
+                print("Creating a new playlist is not implemented yet.")
+                delay(1)
+            case "3":
+                print(f"{username}, are you sure you want to log out?. ")
+                delay()
+                confirm = input("Enter 'yes' or 'no':  ").strip().lower()
+                delay()
+                if confirm == "yes":
+                    print(f"Logging out {username}.")
+                    delay(1)
+                    main_menu_guest()
+                else:
+                    print("Logout cancelled. Returning to main menu.")
+                    delay(1)
+                    
+                
 
 # User account creation.
 def create_account():
@@ -162,7 +211,7 @@ def user_login():
                 delay(0.3)
                 print(f"Login successful for {username}.")
                 delay(2)
-                return username
+                main_menu_user(username)
             else: 
                 delay()
                 print("Invalid username or password. Please try again. ")
