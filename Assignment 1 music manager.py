@@ -30,8 +30,20 @@ username = {
 '''
 
 # function for delay
-def delay(seconds=0.5): # does not require an argument. if 
+def delay(seconds=0.5): # can use an argument, otherwise will default to 0.5 seconds
     time.sleep(seconds)
+
+# Function to show a spinner for loading (pointless, but looks cool)
+def spinner(seconds=2, text="Loading"): # just like the delay function, will default to 2 seconds with no argument
+    # 'text' argument allows for custom text
+    spin_chars = ['|', '/', '-', '\\']
+    end_time = time.time() + seconds
+    idx = 0
+    while time.time() < end_time:
+        print(f"\r{text}... {spin_chars[idx % len(spin_chars)]}", end='', flush=True)
+        time.sleep(0.1)
+        idx += 1
+    print(f"\r{text}... Done!     ")
    
 # password hashing function 
 def hash_password(password):
@@ -58,7 +70,7 @@ def main_menu_guest():
         delay()
         match choice:
             case "1":
-                print("Login functionality not implemented yet.")
+                user_login()
                 
             case "2":
                 create_account()
@@ -76,27 +88,37 @@ def main_menu_guest():
 
 # User account creation.
 def create_account():
-    # Prompt user for details
-    username = input("Enter a username: ").strip()
-    email = input("Enter your email: ").strip().lower()
-    # Validate email format (basic validation)
-    if "@" not in email or "." not in email:
-        print("Invalid email format. Please try again.")
-        return
-    password = getpass.getpass("Enter a password: ").strip() # getpass will hide the password input
-    hashed_password = hash_password(password) # save the hashed password instead of plain text
+    while True:
+        # Prompt user for details
+        username = input("Enter a username: ").strip()
 
-    # Load all existing users from JSON
-    try:
-        with open("users.json", "r") as f:
-            users = json.load(f)
-    except (json.JSONDecodeError, FileNotFoundError):
-        users = {}
+        # Propmt for email and validation
+        while True:
+            email = input("Enter your email: ").strip().lower()
+            # Validate email format (basic validation)
+            if "@" not in email or "." not in email:
+                delay()
+                print("Invalid email format. Please try again.")
+                continue # return to start of the loop to re-enter email
+            break
 
-    # Check if username already exists
-    if username in users:
-        print("Username already exists. Please choose another.")
-        return
+        # Prompt for password
+        password = getpass.getpass("Enter a password: ").strip() # getpass will hide the password input
+        hashed_password = hash_password(password) # save the hashed password instead of plain text
+
+        # Load all existing users from JSON
+        try:
+            with open("users.json", "r") as f:
+                users = json.load(f)
+        except (json.JSONDecodeError, FileNotFoundError):
+            users = {}
+
+        # Check if username already exists
+        if username in users:
+            delay()
+            print("Username already exists. Please choose another.")
+            continue
+        break
     
     # save new user details in the specified format
     users[username] = {
@@ -109,13 +131,49 @@ def create_account():
     with open("users.json", "w") as f: # make sure to use write mode, not append
         json.dump(users, f, indent=4)
 
+    spinner(text="Saving account details")
     print(f"Account created for {username} with email {email}.")
-    print(f"Hashed password: {hashed_password}")
     delay(2)
 
 
-#user login function.
-#def user_login():
+# user login function.
+def user_login():
+    while True:
+        # Prompt for username and password
+        username = input("Enter your username: ").strip()
+        password = getpass.getpass("Enter your password: ").strip() # Hide the password input
+        hashed_password = hash_password(password) # Hash password again for comparison
+
+        # Load all existing users from JSON
+        try:
+            with open("users.json", "r") as f:
+                users = json.load(f)
+        except (json.JSONDecodeError, FileNotFoundError):
+            users = {}
+
+        max_attempts = 3 # Maximum attempts for login
+        attempts = 0 # Counter for login attempts
+        while attempts < max_attempts:
+            # Check if username exists and password matches
+            if username in users and users[username]["password"] == hashed_password:
+                spinner(0.5, text="Checking credentials") # Show spinner for 0.5 seconds
+                delay(0.3) # Short delay for effect
+                spinner(2, text="Logging in") # Show longer spinner for login
+                delay(0.3)
+                print(f"Login successful for {username}.")
+                delay(2)
+                return username
+            else: 
+                delay()
+                print("Invalid username or password. Please try again. ")
+                delay()
+                attempts += 1
+        # If max attempts reached, exit
+        if attempts == max_attempts:
+            print("Maximum login attempts reached. Exiting the application.")
+            delay(1)
+            sys.exit()
+
 
 
 '''
