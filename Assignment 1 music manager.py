@@ -86,8 +86,29 @@ def create_account():
     password = getpass.getpass("Enter a password: ").strip() # getpass will hide the password input
     hashed_password = hash_password(password) # save the hashed password instead of plain text
 
-    # Here you would typically save the user details to a file or database.
-    # For now, we will just print them.
+    # Load all existing users from JSON
+    try:
+        with open("users.json", "r") as f:
+            users = json.load(f)
+    except (json.JSONDecodeError, FileNotFoundError):
+        users = {}
+
+    # Check if username already exists
+    if username in users:
+        print("Username already exists. Please choose another.")
+        return
+    
+    # save new user details in the specified format
+    users[username] = {
+        "email": email,
+        "password": hashed_password,
+        "playlists": []
+    }
+
+    # Save the updated users back to JSON
+    with open("users.json", "w") as f: # make sure to use write mode, not append
+        json.dump(users, f, indent=4)
+
     print(f"Account created for {username} with email {email}.")
     print(f"Hashed password: {hashed_password}")
     delay(2)
