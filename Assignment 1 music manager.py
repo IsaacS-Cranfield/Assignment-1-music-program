@@ -27,15 +27,33 @@ username = {
 
 # Main menu guest (not logged in)
 def main_menu_guest():
-    time.sleep(0.5)
-    print("=" * 40)
-    print("      Welcome to My Music Manager      ")
-    print("=" * 40)
+    while True:
+        # Title
+        time.sleep(0.5)
+        print("\n" * 2)
+        print("=" * 40)
+        print("      Welcome to My Music Manager      ")
+        print("=" * 40)
 
-    time.sleep(1)
-    print("1. User Login")
-    print("2. Create User Account")
-    print("3. Exit")
+        # Options
+        time.sleep(1)
+        print("1. User Login")
+        print("2. Create User Account")
+        print("3. Exit")
+
+        choice = input("Enter an option (1-3): ").strip()
+        match choice:
+            case "1":
+                print("Login functionality not implemented yet.")
+            case "2":
+                print("Account creation functionality not implemented yet.")
+            case "3":
+                print("Exiting the application. Goodbye!")
+                return
+            case "4":
+    
+
+    
 
 # User account creation.
 #def create_account():
