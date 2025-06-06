@@ -113,9 +113,8 @@ def main_menu_user(username):
         delay()
         match choice:
             case "1":
-                # Placeholder for viewing playlists
-                print("Viewing playlists is not implemented yet.")
-                delay(1)
+                view_playlists(username)
+                
             case "2":
                 # Placeholder for creating a new playlist
                 print("Creating a new playlist is not implemented yet.")
@@ -223,7 +222,33 @@ def user_login():
             delay(1)
             sys.exit()
 
+def view_playlists(username):
+    spinner(1, text="Checking for playlists")  # Show spinner for loading playlists
+    delay()
+    # Load JSON containing user data
+    try:
+        with open("users.json", "r") as f:
+            users = json.load(f)
+    except (json.JSONDecodeError, FileNotFoundError):
+        print("No playlists found or users file is empty.")
+        return []
 
+    if username in users:
+        playlists = users[username].get("playlists", [])
+        if playlists:
+            print(f"\nPlaylists for {username}:")
+            for idx, playlist in enumerate(playlists, 1):
+                print(f"{idx}. {playlist['name']} ({len(playlist['songs'])} songs)")
+            return playlists
+        else:
+            print("You have no playlists yet.")
+            delay(1)
+            return []
+    else:
+        print("User not found.")
+        return []
+
+    
 
 '''
 # Function to print the playlist to the user.
