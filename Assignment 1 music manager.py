@@ -168,7 +168,52 @@ def main_menu_user(username):
                     print("Logout cancelled. Returning to main menu.")
                     delay(1)
                     
+def admin_menu():
+    while True:
+        # Title
+        delay()
+        print("\n" + "." * 40)
+        print("      Admin Menu      ")
+        print("." * 40)
+        delay()
 
+        # Show all users before options
+        try:
+            with open("users.json", "r") as f:
+                users = json.load(f)
+        except (json.JSONDecodeError, FileNotFoundError):
+            users = {}
+
+        if not users:
+            print("No users available.")
+        else:
+            print("\nAll registered users:")
+            for username, details in users.items():
+                print(f"Username: {username}, Email: {details['email']}, Playlists: {len(details['playlists'])}")
+            print()
+
+        # Options
+        delay(1)
+        typewriter("1. Edit User", 0.03)
+        delay(0.2)
+        typewriter("2. Delete User", 0.02)
+        delay(0.2)
+        typewriter("3. Exit", 0.05)
+        delay(0.5)
+
+        choice = input("Enter an option (1-3): ").strip()
+        delay()
+        match choice:
+            case "1":
+                edit_user()  # Function to edit a user
+            case "2":
+                delete_user()  # Function to delete a user
+            case "3":
+                print("Exiting the admin menu.")
+                delay(1)
+                sys.exit()
+            case _:
+                print("Invalid option. Please try again.")
 
 
 # ==========================             
@@ -191,9 +236,29 @@ def create_account():
                 continue # return to start of the loop to re-enter email
             break
 
-        # Prompt for password
-        password = getpass.getpass("Enter a password: ").strip() # getpass will hide the password input
+        while True:
+            # Prompt for password
+            password = getpass.getpass("Enter a password: ").strip() # getpass will hide the password input
+            passconfirm = getpass.getpass("Confirm your password: ").strip() # confirm password
+            # Check if passwords match
+            if password != passconfirm: 
+                delay()
+                print("Passwords do not match. Please try again.")
+                continue
+            else:
+                break
         hashed_password = hash_password(password) # save the hashed password instead of plain text
+
+        while True:
+            is_admin = input("Elevate to admin? (yes/no): ").strip().lower()
+
+            if is_admin == "yes" or is_admin == "no":
+                break
+            
+            else:
+                delay()
+                print("Invalid input. Please enter 'yes' or 'no'.")
+                continue
 
         # Load all existing users from JSON
         try: # Try to read the users.json file
@@ -214,6 +279,7 @@ def create_account():
     users[username] = {
         "email": email,
         "password": hashed_password,
+        "is_admin": is_admin == "yes",  # Convert to boolean
         "playlists": []
     }
 
@@ -224,7 +290,6 @@ def create_account():
     spinner(text="Saving account details")
     print(f"Account created for {username} with email {email}.")
     delay(2)
-
 
 # user login function.
 def user_login():
@@ -244,13 +309,19 @@ def user_login():
         password = getpass.getpass("Enter your password: ").strip() # Hide the password input
         hashed_password = hash_password(password) # Hash password again for comparison
 
-        # Check if username exists and password matches
-        if username in users and users[username]["password"] == hashed_password:
+        # Check if username exists and password matches, and if the user is an admin or not
+        # For non admin users:
+        if username in users and users[username]["password"] == hashed_password and not users[username]["is_admin"]:
             spinner(0.5, text="Checking credentials") # Show spinner for 0.5 seconds
             spinner(2, text="Logging in") # Show longer spinner for login
-            print(f"Login successful for {username}.")
             delay(1)
             main_menu_user(username)
+        # For admin users:
+        elif username in users and users[username]["password"] == hashed_password and users[username]["is_admin"]:
+            spinner(0.5, text="Checking credentials") # Show spinner for 0.5 seconds
+            spinner(2, text="Logging in") # Show longer spinner for login
+            delay(1)
+            admin_menu()  # Redirect to admin menu if user is an admin
         else: 
             delay()
             print("Invalid username or password. Please try again. ")
@@ -263,7 +334,107 @@ def user_login():
         delay(1)
         sys.exit()
 
+def view_all_users():
+    # Load all existing users from JSON
+    try:
+        with open("users.json", "r") as f:
+            users = json.load(f)
+    except (json.JSONDecodeError, FileNotFoundError):
+        print("No users found or users file is empty.")
+        return
 
+    if not users:
+        print("No users available.")
+        return
+
+    print("\nAll registered users:")
+    for username, details in users.items():
+        print(f"Username: {username}, Email: {details['email']}, Playlists: {len(details['playlists'])}")
+    input("Press Enter to continue...")  # Wait for user input before returning
+    delay(1)
+
+def edit_user():
+    # Load all existing users from JSON
+    try:
+        with open("users.json", "r") as f:
+            users = json.load(f)
+    except (json.JSONDecodeError, FileNotFoundError):
+        print("No users found or users file is empty.")
+        return
+
+    if not users:
+        print("No users available to edit.")
+        return
+
+    print("\nAll registered users:")
+    for idx, username in enumerate(users.keys(), 1):
+        print(f"{idx}. {username}")
+    
+    try:
+        user_index = int(input("Enter the index of the user to edit (1-based index): ")) - 1
+        if 0 <= user_index < len(users):
+            username_edit = list(users.keys())[user_index]
+            new_email = input(f"Enter new email for '{username_edit}' (leave blank to keep current): ").strip()
+            if new_email:
+                users[username_edit]["email"] = new_email
+                with open("users.json", "w") as f:
+                    json.dump(users, f, indent=4)  # Save updated users back to JSON
+                spinner(text="Updating user details")
+                print(f"User '{username_edit}' updated successfully.")
+            else:
+                print("No changes made to the user's email.")
+        else:
+            print("Invalid user index. Please try again.")
+    except ValueError:
+        print("Please enter a valid number.")
+
+
+def delete_user():
+    # Load all existing users from JSON
+    try:
+        with open("users.json", "r") as f:
+            users = json.load(f)
+    except (json.JSONDecodeError, FileNotFoundError):
+        delay()
+        print("No users found or users file is empty.")
+        delay(1)
+        return
+
+    if not users:
+        delay()
+        print("No users available to delete.")
+        delay(1)
+        return
+
+    print("\nAll registered users:")
+    delay()
+    for idx, username in enumerate(users.keys(), 1):
+        print(f"{idx}. {username}")
+        delay(0.2)
+
+    try:
+        user_index = int(input("Enter the index of the user to delete (1-based index): ")) - 1
+        delay()
+        if 0 <= user_index < len(users):
+            username_delete = list(users.keys())[user_index]
+            confirm = input(f"Are you sure you want to delete '{username_delete}'? (yes/no): ").strip().lower()
+            delay()
+            if confirm == "yes":
+                del users[username_delete]  # Delete the user from the dictionary
+                with open("users.json", "w") as f:
+                    json.dump(users, f, indent=4)  # Save updated users back to JSON
+                spinner(text="Deleting user")
+                print(f"User '{username_delete}' deleted successfully.")
+                delay(1)
+            else:
+                print("User deletion cancelled.")
+                delay(1)
+        else:
+            print("Invalid user index. Please try again.")
+            delay(1)
+    except ValueError:
+        print("Please enter a valid number.")
+        delay(1)
 
 
 # =====================
@@ -279,28 +450,25 @@ def manage_playlists(username):
         print(f" Playlist management ")
         print("/\\" * 10)
         delay()
+
+        playlists = view_playlists(username)  # Show all playlists for the user
+
         # Options
-        delay(1)
-        typewriter("1. View playlists", 0.03)
+        delay()
+        typewriter("1. Edit playlist", 0.03)
         delay(0.2)
-        typewriter("2. Edit playlist", 0.03)
+        typewriter("2. Delete playlist", 0.03)
         delay(0.2)
-        typewriter("3. Delete playlist", 0.03)
-        delay(0.2)
-        typewriter("4. Return to main menu", 0.05)
+        typewriter("3. Return to main menu", 0.02)
         delay(0.5)
 
-        choice = input("Enter an option (1-4): ").strip()
+        choice = input("Enter an option (1-3): ").strip()
         print("")
         delay()
         match choice:
-            # View playlists
-            case "1":
-                view_playlists(username)  # Call function to view playlists
-                
             # Edit playlist
-            case "2":
-                playlists = view_playlists(username)
+            case "1":
+                #playlists = view_playlists(username)
                 if not playlists:
                     print("No playlists available to edit.")
                     continue
@@ -314,12 +482,12 @@ def manage_playlists(username):
                     print("Please enter a valid number.")
 
             # Delete playlist
-            case "3":
+            case "2":
                 spinner(1, text="Checking for playlists") # Show spinner for loading playlists
                 # Load JSON containing user data
 
             # Return to the main menu
-            case "4":
+            case "3":
                 print(f"Returning to main menu for {username}.")
                 delay(1)
                 main_menu_user(username)  # Return to the main user menu
@@ -371,15 +539,17 @@ def view_playlists(username):
         with open("users.json", "r") as f:
             users = json.load(f)
     except (json.JSONDecodeError, FileNotFoundError):
-        print("No playlists found or users file is empty.")
+        print("No playlists found.")
         return []
 
     playlists = users[username].get("playlists", [])
     if playlists:
-        print(f"\nPlaylists for {username}:")
+        typewriter(f"\nPlaylists for {username}:", 0.02)
         for idx, playlist in enumerate(playlists, 1):
             print(f"{idx}. {playlist['name']} ({len(playlist['songs'])} songs)")
-        input("Press Enter to continue...\n")  # Wait for user input before returning
+            delay()
+        #input("Press Enter to continue...\n")  # Wait for user input before returning
+        print()
         delay(1)
         return playlists
     else:
@@ -401,24 +571,39 @@ def edit_playlist(username, playlist_index):
         return
     
     playlists = users[username].get("playlists", [])
+
     if 0 <= playlist_index < len(playlists):
         playlist = playlists[playlist_index]
+
         while True:
             print("\n" + "~" * 30)
             print(f"Editing playlist: {playlist['name']}")
             print("~" * 30)
+
+            # Show songs before options
+            if not playlist["songs"]:
+                print("No songs in the playlist.")
+            else:
+                typewriter("Songs in the playlist:", 0.02)
+                for idx, song in enumerate(playlist["songs"], 1):
+                    print(f"{idx}. {song[0]} by {song[1]} ({song[2]})")
+                    delay()
+            print()
+
+            delay()
+            # Options (no view songs option)
             typewriter("1. Edit playlist name", 0.03)
             delay(0.2)
             typewriter("2. Add song", 0.04)
             delay(0.2)
             typewriter("3. Remove song", 0.04)
             delay(0.2)
-            typewriter("4. View songs", 0.04)
-            delay(0.2)
-            typewriter("5. Back to playlist management", 0.02)
-            choice = input("Enter an option (1-5): ").strip()
+            typewriter("4. Back to playlist management", 0.02)
+
+            choice = input("Enter an option (1-4): ").strip()
             print("")  # Print a new line for better readability
             delay()
+
             match choice:
                 # Edit playlist name
                 case "1":
@@ -438,18 +623,8 @@ def edit_playlist(username, playlist_index):
                 case "3":
                     remove_song(username, playlist_index, playlist)  # Call the remove song function
 
-                # View songs in the playlist
-                case "4":
-                    if not playlist["songs"]:
-                        print("No songs in the playlist.")
-                    else:
-                        print("Songs in the playlist:")
-                        for idx, song in enumerate(playlist["songs"], 1):
-                            print(f"{idx}. {song[0]} by {song[1]} ({song[2]})")
-                        delay()
-                        input("Press Enter to continue...")  # Wait for user input before returning
                 # Back to playlist management
-                case "5":
+                case "4":
                     break
                 case _:
                     print("Invalid option. Please try again.")
@@ -520,30 +695,27 @@ def remove_song(username, playlist_index, playlist):
         return []
 
     if not playlist["songs"]:
+        delay()
         print("No songs in the playlist to remove.")
+        delay(1)
         return
     print("\nSongs in the playlist:")
     delay()
 
-    # Display songs in the playlist
-    for idx, song in enumerate(playlist["songs"], 1):
-        print(f"{idx}. {song[0]} by {song[1]} ({song[2]})")
-    try:
-        song_index = int(input("\nEnter the index of the song to remove (1-based index): ")) - 1
-        if 0 <= song_index < len(playlist["songs"]):
-            removed_song = playlist["songs"].pop(song_index)
-            users[username]["playlists"][playlist_index]["songs"] = playlist["songs"]  # Update the songs in the playlist
-            # Save updated playlists back to JSON
-            with open("users.json", "w") as f:
-                json.dump(users, f, indent=4)
-            spinner(text="Removing song")
-            delay(1)
-            print(f"Removed '{removed_song[0]}' by {removed_song[1]} from the playlist.")
-            delay(1)
-        else:
-            print("Invalid song index.")
-    except ValueError:
-        print("Please enter a valid number.")
+    song_index = int(input("\nEnter the index of the song to remove (1-based index): ")) - 1
+    if 0 <= song_index < len(playlist["songs"]):
+        removed_song = playlist["songs"].pop(song_index)
+        users[username]["playlists"][playlist_index]["songs"] = playlist["songs"]  # Update the songs in the playlist
+        # Save updated playlists back to JSON
+        with open("users.json", "w") as f:
+            json.dump(users, f, indent=4)
+        spinner(text="Removing song")
+        delay(1)
+        print(f"Removed '{removed_song[0]}' by {removed_song[1]} from the playlist.")
+        delay(1)
+    else:
+        print("Invalid song index.")
+   
 
 
 # Program flow guide: 
