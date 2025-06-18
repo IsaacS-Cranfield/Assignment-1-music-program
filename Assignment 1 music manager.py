@@ -1,32 +1,41 @@
-# Music app making use of lists and tuples
+# A Music and Playlist Manager that allows users to create accounts, manage playlists, and songs.
+# The program stores all user data in a JSON file.
+
+# Created by: Isaac Stewart
+# Student number: 468639
+
+# Improt necessary libraries
 import time
 import json
 import sys
 import getpass
 import hashlib
 
-# Create necessary files
+# Create the users file if it doesn't already exist
 open("users.json", "a").close()
 
-
-''' Basic user structure:
-username = {
-    "email": "",
-    "password": "",
-    "playlists": [
-        {
-            "name": "",
-            "songs": [
-                ("title", "artist", "0:00"),
-            ]
-        },
-        {
-            "name": "",
-            "songs": [
-                ("title", "artist", "0:00")
-            ]
-        }
-    ]
+# Basic stucture for how the user data is stored in the JSON 
+''' 
+{
+    username = {
+        "email": "",
+        "password": "",
+        "is_admin": false/true,
+        "playlists": [
+            {
+                "name": "",
+                "songs": [
+                    ("title", "artist", "0:00"),
+                ]
+            },
+            {
+                "name": "",
+                "songs": [
+                    ("title", "artist", "0:00")
+                ]
+            }
+        ]
+    }
 }
 '''
 
