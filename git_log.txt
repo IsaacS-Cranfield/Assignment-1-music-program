@@ -1,0 +1,127 @@
+[33mcommit 6b0a58c4c41e420f7c6929e499c3cf69c1139aca[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: IsaacS-Cranfield <Isaac.stewart.639@cranfield.ac.uk>
+Date:   Wed Jun 18 15:53:38 2025 +0100
+
+    small changes
+
+[33mcommit 37af8f574a64ea2aa25907efe50eb1613a983e60[m
+Author: IsaacS-Cranfield <Isaac.stewart.639@cranfield.ac.uk>
+Date:   Wed Jun 18 11:17:06 2025 +0100
+
+    Admin can now fully edit all user details
+
+[33mcommit 98678ff449e37becaabe596de8c85a993cdbc984[m
+Author: IsaacS-Cranfield <Isaac.stewart.639@cranfield.ac.uk>
+Date:   Tue Jun 17 16:46:13 2025 +0100
+
+    Created admin functionality. Still working on being able to edit standard users.
+
+[33mcommit 7c093e1f01a83746fb7a0de89ecf25e4a97eebd1[m
+Author: IsaacS-Cranfield <Isaac.stewart.639@cranfield.ac.uk>
+Date:   Mon Jun 9 18:09:29 2025 +0100
+
+    Added playlist and song management (per user)
+
+[33mcommit d5c4b0a7bc57a79cd36575650ab6d1aa95a645ce[m
+Author: IsaacS-Cranfield <Isaac.stewart.639@cranfield.ac.uk>
+Date:   Fri Jun 6 11:55:16 2025 +0100
+
+    added playlist viewing
+
+[33mcommit bc3e204bf8c0174fa0c9a1d9f714200a2eedb5de[m
+Author: IsaacS-Cranfield <Isaac.stewart.639@cranfield.ac.uk>
+Date:   Wed Jun 4 19:29:50 2025 +0100
+
+    user login now works with more cool animations
+
+[33mcommit 58a5bf3e79f94626982267d2450408d6a6ab490d[m
+Author: IsaacS-Cranfield <Isaac.stewart.639@cranfield.ac.uk>
+Date:   Wed Jun 4 16:44:54 2025 +0100
+
+    Added user login and cool pointless loading spinners. added validation and max attempts to the password
+
+[33mcommit 0f2151c233cd238e7fd4b26adb42ec49c8b313cf[m
+Author: IsaacS-Cranfield <Isaac.stewart.639@cranfield.ac.uk>
+Date:   Wed Jun 4 16:07:50 2025 +0100
+
+    modified:   users.json
+
+[33mcommit 15e65537f2ace02c4a030a16bbfdf8de616db794[m
+Author: IsaacS-Cranfield <Isaac.stewart.639@cranfield.ac.uk>
+Date:   Wed Jun 4 16:06:27 2025 +0100
+
+    Account creation works and is stored to JSON
+
+[33mcommit dbf4600305b6158a9a6810792c88f155dddb0f18[m
+Author: IsaacS-Cranfield <Isaac.stewart.639@cranfield.ac.uk>
+Date:   Wed Jun 4 16:04:30 2025 +0100
+
+            modified:   Assignment 1 music manager.py
+            modified:   users.json
+
+[33mcommit 0b4f713b1519841569d446ac9dae5b4cc44b83d4[m
+Author: IsaacS-Cranfield <Isaac.stewart.639@cranfield.ac.uk>
+Date:   Wed Jun 4 15:47:44 2025 +0100
+
+    modified:   Assignment 1 music manager.py
+
+[33mcommit 93a515f14a29949eb646cb6230f3e532b55f27eb[m
+Author: IsaacS-Cranfield <Isaac.stewart.639@cranfield.ac.uk>
+Date:   Wed Jun 4 12:20:44 2025 +0100
+
+    modified:   Assignment 1 music manager.py
+
+[33mcommit 305bc2e012843d7b5e39124f3814b188f5b7c6e8[m
+Author: IsaacS-Cranfield <Isaac.stewart.639@cranfield.ac.uk>
+Date:   Mon Jun 2 17:21:35 2025 +0100
+
+            modified:   Assignment 1 music manager.py
+
+[33mcommit 7ab1f65da8f52522bea688ebaa5309d1fdff4fde[m
+Author: IsaacS-Cranfield <Isaac.stewart.639@cranfield.ac.uk>
+Date:   Mon Jun 2 17:11:26 2025 +0100
+
+    modified:   Assignment 1 music manager.py
+    new file:   users.json
+
+[33mcommit 4f250fa19d8a894e6c23960de0af62be31d83d40[m
+Author: IsaacS-Cranfield <Isaac.stewart.639@cranfield.ac.uk>
+Date:   Mon Jun 2 17:06:31 2025 +0100
+
+            modified:   Assignment 1 music manager.py
+
+[33mcommit 733fd2a22d928d33746d3afc6a64672022bec0da[m
+Author: IsaacS-Cranfield <Isaac.stewart.639@cranfield.ac.uk>
+Date:   Mon Jun 2 14:57:52 2025 +0100
+
+            modified:   Assignment 1 music manager.py
+
+[33mcommit d23443d1e27713938d1f442bc5b0d1f970b9ea64[m
+Author: IsaacS-Cranfield <Isaac.stewart.639@cranfield.ac.uk>
+Date:   Mon Jun 2 12:48:31 2025 +0100
+
+    renamed:    Assignment 1 music program.py -> Assignment 1 music manager.py
+
+[33mcommit 45f5a75046ff014910b28b37766e77b88a8c0213[m
+Author: IsaacS-Cranfield <Isaac.stewart.639@cranfield.ac.uk>
+Date:   Mon Jun 2 11:59:42 2025 +0100
+
+            modified:   README.md
+
+[33mcommit 36fdf5335051376f0972e134f5ef4791372463ad[m
+Author: IsaacS-Cranfield <isaac.stewart.639@cranfield.ac.uk>
+Date:   Mon Jun 2 11:56:37 2025 +0100
+
+    Update README.md
+
+[33mcommit 12b80b050881aa4efd4a318e6f2582a3fa3735bd[m
+Author: IsaacS-Cranfield <isaac.stewart.639@cranfield.ac.uk>
+Date:   Mon Jun 2 11:56:04 2025 +0100
+
+    Add files via upload
+
+[33mcommit aa98cb6f136fd1e34c373d56a7ec02143782e97d[m
+Author: IsaacS-Cranfield <Isaac.stewart.639@cranfield.ac.uk>
+Date:   Mon Jun 2 11:53:16 2025 +0100
+
+    first commit
