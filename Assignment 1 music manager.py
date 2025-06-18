@@ -198,7 +198,7 @@ def admin_menu():
         delay(0.2)
         typewriter("2. Delete User", 0.02)
         delay(0.2)
-        typewriter("3. Exit", 0.05)
+        typewriter("3. Log out", 0.05)
         delay(0.5)
 
         choice = input("Enter an option (1-3): ").strip()
@@ -209,7 +209,7 @@ def admin_menu():
             case "2":
                 delete_user()  # Function to delete a user
             case "3":
-                print("Exiting the admin menu.")
+                print(f"Logging out {username}.")
                 delay(1)
                 sys.exit()
             case _:
@@ -370,19 +370,38 @@ def edit_user():
     for idx, username in enumerate(users.keys(), 1):
         print(f"{idx}. {username}")
     
+    # Choose user to edit and prompt for details
     try:
         user_index = int(input("Enter the index of the user to edit (1-based index): ")) - 1
         if 0 <= user_index < len(users):
             username_edit = list(users.keys())[user_index]
+
+            print(f"\nEditing user: {username_edit}")
+
+            # Edit username
+            new_username = input(f"Enter new username for '{username_edit}' (leave blank to keep current): ").strip()
+            if new_username and new_username != username_edit:
+                if new_username in users:
+                    print("Username already exists. No changes made to username.")
+                    new_username = username_edit  # Keep old username
+                else:
+                    users[new_username] = users.pop(username_edit)
+                    username_edit = new_username  # Update for further edits
+
+            # Edit email
             new_email = input(f"Enter new email for '{username_edit}' (leave blank to keep current): ").strip()
             if new_email:
                 users[username_edit]["email"] = new_email
-                with open("users.json", "w") as f:
-                    json.dump(users, f, indent=4)  # Save updated users back to JSON
-                spinner(text="Updating user details")
-                print(f"User '{username_edit}' updated successfully.")
-            else:
-                print("No changes made to the user's email.")
+
+            # Edit password
+            new_password = getpass.getpass(f"Enter new password for '{username_edit}' (leave blank to keep current): ").strip()
+            if new_password:
+                users[username_edit]["password"] = hash_password(new_password)
+
+            with open("users.json", "w") as f:
+                json.dump(users, f, indent=4)  # Save updated users back to JSON
+            spinner(text="Updating user details")
+            print(f"User '{username_edit}' updated successfully.")
         else:
             print("Invalid user index. Please try again.")
     except ValueError:
