@@ -1,4 +1,41 @@
-[33mcommit 6b0a58c4c41e420f7c6929e499c3cf69c1139aca[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+[33mcommit db2ba8b9b2073c0ae483f76feb17c161ee543ac3[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Merge: d480130 462d81d
+Author: IsaacS-Cranfield <Isaac.stewart.639@cranfield.ac.uk>
+Date:   Thu Jun 19 13:20:17 2025 +0100
+
+    Merge branch 'main' of https://github.com/IsaacS-Cranfield/Assignment-1-music-program
+
+[33mcommit d480130ac8e222544b4659ea7af9306ed567b508[m
+Author: IsaacS-Cranfield <Isaac.stewart.639@cranfield.ac.uk>
+Date:   Thu Jun 19 13:20:03 2025 +0100
+
+    final tweaks and comments
+
+[33mcommit 462d81d41021ccb082ed0b0563f88a925db54394[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: IsaacS-Cranfield <isaac.stewart.639@cranfield.ac.uk>
+Date:   Thu Jun 19 13:19:26 2025 +0100
+
+    Update README.md
+
+[33mcommit 36b44976f67d01a4994b0e725b513dea4d4fd8f6[m
+Author: IsaacS-Cranfield <isaac.stewart.639@cranfield.ac.uk>
+Date:   Thu Jun 19 13:16:37 2025 +0100
+
+    Create README.md
+
+[33mcommit b2685d63772532fd01c7626ffa4bb3d59ea59d64[m
+Author: IsaacS-Cranfield <isaac.stewart.639@cranfield.ac.uk>
+Date:   Thu Jun 19 12:14:38 2025 +0000
+
+            deleted:    README.md
+
+[33mcommit 6aa112f22d9167cb17ca1349430772ec65503fb4[m
+Author: IsaacS-Cranfield <Isaac.stewart.639@cranfield.ac.uk>
+Date:   Wed Jun 18 15:56:01 2025 +0100
+
+    new file:   git_log.txt
+
+[33mcommit 6b0a58c4c41e420f7c6929e499c3cf69c1139aca[m
 Author: IsaacS-Cranfield <Isaac.stewart.639@cranfield.ac.uk>
 Date:   Wed Jun 18 15:53:38 2025 +0100
 
