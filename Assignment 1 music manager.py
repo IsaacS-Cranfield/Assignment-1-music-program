@@ -139,6 +139,7 @@ def main_menu_guest():
             case _:
                 print("Invalid option. Please try again.")
     
+# main menu for logged in users
 def main_menu_user(username):
     while True:
         # Title
@@ -176,7 +177,8 @@ def main_menu_user(username):
                 else:
                     print("Logout cancelled. Returning to main menu.")
                     delay(1)
-                    
+
+# ADMIN: menu for user management           
 def admin_menu():
     while True:
         # Title
@@ -343,6 +345,7 @@ def user_login():
         delay(1)
         sys.exit()
 
+# ADMIN: function to view all users details
 def view_all_users():
     # Load all existing users from JSON
     try:
@@ -362,6 +365,7 @@ def view_all_users():
     input("Press Enter to continue...")  # Wait for user input before returning
     delay(1)
 
+# ADMIN: function to edit user details
 def edit_user():
     # Load all existing users from JSON
     try:
@@ -416,7 +420,7 @@ def edit_user():
     except ValueError:
         print("Please enter a valid number.")
 
-
+# ADMIN: function to delete a user
 def delete_user():
     # Load all existing users from JSON
     try:
