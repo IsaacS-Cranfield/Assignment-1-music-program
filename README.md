@@ -1,3 +1,3 @@
-This is my music program for Assignment 1 in the DMP unit
-
-test
+# Digital Maths and Programming - Assignment 1 
+### Music manager
+By Isaac Stewart, Student number: 468639
