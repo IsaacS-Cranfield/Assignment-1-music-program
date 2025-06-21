@@ -486,6 +486,7 @@ def manage_playlists(username):
         playlists = view_playlists(username)  # Show all playlists for the user
 
         # Options
+        print()
         delay()
         typewriter("1. Edit playlist", 0.03)
         delay(0.2)
@@ -502,7 +503,9 @@ def manage_playlists(username):
             case "1":
                 #playlists = view_playlists(username)
                 if not playlists:
+                    delay()
                     print("No playlists available to edit.")
+                    delay(1)
                     continue
 
                 try:
@@ -520,7 +523,7 @@ def manage_playlists(username):
 
             # Return to the main menu
             case "3":
-                print(f"Returning to main menu for {username}.")
+                print(f"Returning to main menu for user: {username}.")
                 delay(1)
                 main_menu_user(username)  # Return to the main user menu
 
@@ -611,10 +614,12 @@ def edit_playlist(username, playlist_index):
             print("\n" + "~" * 30)
             print(f"Editing playlist: {playlist['name']}")
             print("~" * 30)
+            delay()
 
             # Show songs before options
             if not playlist["songs"]:
                 print("No songs in the playlist.")
+                delay()
             else:
                 typewriter("Songs in the playlist:", 0.02)
                 for idx, song in enumerate(playlist["songs"], 1):
