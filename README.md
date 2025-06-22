@@ -17,5 +17,6 @@ Microsoft (2025). Copilot (GPT-4.1). https://copilot.microsoft.com
 
 Along with my own knowledge, I used W3Schools to help fill in the gaps when I was not sure how to develop certain features.
 
-W3Schools. (n.d.). Python file handling. W3Schools. https://www.w3schools.com/python/python_file_handling.asp
+W3Schools. (n.d.). Python file handling. W3Schools. https://www.w3schools.com/python/python_file_handling.asp  
+
 W3Schools. (n.d.). Python match case statement. W3Schools. https://www.w3schools.com/python/python_match.asp
